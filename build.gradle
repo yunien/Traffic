@@ -44,5 +44,13 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
+	
+	// https://mvnrepository.com/artifact/org.rxtx/rxtx
+	compile group: 'org.rxtx', name: 'rxtx', version: '2.1.7'
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+	// https://mvnrepository.com/artifact/commons-codec/commons-codec
+	compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
+	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
