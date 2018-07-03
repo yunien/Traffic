@@ -1,4 +1,4 @@
-package com
+package com.wistron.occ
 
 import com.wistron.occ.socket.config.NettyProperties
 import com.wistron.occ.socket.netty.ChannelRepository
