@@ -1,4 +1,4 @@
-package com.wistron.occ.utils;
+package com.wistron.occ.serial;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.wistron.occ.vo.InfoCode;
-import com.wistron.occ.vo.Type;
+import com.wistron.occ.enums.InfoCode;
+import com.wistron.occ.enums.Type;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
 

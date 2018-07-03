@@ -1,4 +1,4 @@
-package com.wistron.occ.vo;
+package com.wistron.occ.enums;
 
 import org.apache.commons.lang3.StringUtils;
 

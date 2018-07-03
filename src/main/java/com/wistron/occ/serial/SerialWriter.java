@@ -1,8 +1,8 @@
-package com.wistron.occ.utils;
+package com.wistron.occ.serial;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import com.wistron.occ.vo.ControllerCode;
+import com.wistron.occ.enums.ControllerCode;
 
 public class SerialWriter implements Runnable {
 	OutputStream out;

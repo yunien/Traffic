@@ -1,8 +1,6 @@
-package com.wistron.occ;
+package com.wistron.occ.serial;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import com.wistron.occ.utils.SerialReader;
 
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;

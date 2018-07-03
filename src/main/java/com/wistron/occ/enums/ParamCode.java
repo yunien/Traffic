@@ -1,4 +1,4 @@
-package com.wistron.occ.vo;
+package com.wistron.occ.enums;
 
 public enum ParamCode {
     SIGNAL_MAP("SignalMap", "表示燈之方向"),

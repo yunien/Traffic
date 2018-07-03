@@ -1,4 +1,4 @@
-package com.wistron.occ.vo;
+package com.wistron.occ.enums;
 
 public enum  ControllerCode {
     DLE((byte) 0xaa, "Data Link Escape  以控制資料傳輸"),
