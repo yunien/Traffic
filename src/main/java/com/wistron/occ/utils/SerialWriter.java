@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import com.wistron.occ.vo.ControllerCode;
-import com.wistron.occ.vo.EnumType;
 
 public class SerialWriter implements Runnable {
 	OutputStream out;

@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.wistron.occ.vo.InfoCode;
+import com.wistron.occ.vo.Type;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
-
-import com.wistron.occ.vo.EnumType;
 
 import gnu.io.SerialPort;
 
@@ -30,10 +30,10 @@ public class SerialReader implements Runnable {
 
 			List<String> perMsgList = new ArrayList<String>();
 			int msgListIndex = 0;
-			EnumType.Type msgTitle = EnumType.Type.NULL;
+			Type msgTitle = Type.NULL;
 			int totalLength = 0;
 			List<String> infoList = new ArrayList<String>();
-			Map<EnumType.InfoCode, List<String>> infoMap = new HashMap<EnumType.InfoCode, List<String>>();
+			Map<InfoCode, List<String>> infoMap = new HashMap<InfoCode, List<String>>();
 			int i=0;
 			while ((len = this.in.read(buffer)) > -1) {
 //				System.out.println( i+"：InputStream:"+Hex.encodeHexString(buffer) );
@@ -46,21 +46,21 @@ public class SerialReader implements Runnable {
 				System.out.println(perMsgList.size() + ". perMsgList:" + perMsgList.get(msgListIndex));
 
 				//	第二個byte可決定傳過來的訊息類型 msgTitle
-				if(perMsgList.size() > 1 && msgTitle == EnumType.Type.NULL){
+				if(perMsgList.size() > 1 && msgTitle == Type.NULL){
 //					System.out.println("改變msgTitle "+ perMsgList.get(msgListIndex-1) + " " + perMsgList.get(msgListIndex) );
 					if(StringUtils.equals(perMsgList.get(msgListIndex-1), "aa") && StringUtils.equals(perMsgList.get(msgListIndex), "dd")){
-						System.out.println(EnumType.Type.ACK);
-						msgTitle = EnumType.Type.ACK;
+						System.out.println(Type.ACK);
+						msgTitle = Type.ACK;
 					} else if( StringUtils.equals(perMsgList.get(msgListIndex-1), "aa") && StringUtils.equals(perMsgList.get(msgListIndex), "ee") ){
-						System.out.println(EnumType.Type.NACK);
-						msgTitle = EnumType.Type.NACK;
+						System.out.println(Type.NACK);
+						msgTitle = Type.NACK;
 					} else if( StringUtils.equals(perMsgList.get(msgListIndex-1), "aa") && StringUtils.equals(perMsgList.get(msgListIndex), "bb") ){
-						System.out.println(EnumType.Type.MSG);
-						msgTitle = EnumType.Type.MSG;
+						System.out.println(Type.MSG);
+						msgTitle = Type.MSG;
 					} else {
 						perMsgList.clear();
 						msgListIndex = 0;
-						msgTitle = EnumType.Type.NULL;
+						msgTitle = Type.NULL;
 						totalLength = 0;
 						infoMap.clear();
 						infoList.clear();
@@ -96,7 +96,7 @@ public class SerialReader implements Runnable {
 					// save db
 					perMsgList.clear();
 					msgListIndex = 0;
-					msgTitle = EnumType.Type.NULL;
+					msgTitle = Type.NULL;
 					totalLength = 0;
 					infoMap.clear();
 					infoList.clear();
@@ -126,7 +126,7 @@ public class SerialReader implements Runnable {
 	}
 
 	private void composeInfoMap(List<String> perMsgList, int totalLength,
-			List<String> infoList, Map<EnumType.InfoCode, List<String>> infoMap){
+			List<String> infoList, Map<InfoCode, List<String>> infoMap){
 		StringBuffer buf = new StringBuffer();
 		for(int j=8 ; j<=totalLength-3 ; j++){
 			System.out.print(perMsgList.get(j-1) + " ");
@@ -136,12 +136,12 @@ public class SerialReader implements Runnable {
 				infoList.add(perMsgList.get(j-1));
 			}
 		}
-		infoMap.put(EnumType.InfoCode.lookup(buf.toString()), infoList);
+		infoMap.put(InfoCode.lookup(buf.toString()), infoList);
 	}
 
-	private void converterInfoMsg(final Map<EnumType.InfoCode, List<String>> infoMap){
+	private void converterInfoMsg(final Map<InfoCode, List<String>> infoMap){
 		// 只會有一筆
-		for (EnumType.InfoCode infoCode : infoMap.keySet()) {
+		for (InfoCode infoCode : infoMap.keySet()) {
             System.out.println(infoCode + ":" + infoMap.get(infoCode));
             switch (infoCode) {
     		case CODE_5F0F:
@@ -193,14 +193,14 @@ public class SerialReader implements Runnable {
 	}
 
 	private void composePerMsgList(List<String> perMsgList, int msgListIndex,
-			EnumType.Type msgTitle, int totalLength, final String hexString){
+			Type msgTitle, int totalLength, final String hexString){
 
 		perMsgList.add(hexString);
 
 		System.out.println(perMsgList.size() + ". perMsgList:" + perMsgList.get(msgListIndex));
 
 		//第二筆會進去改變msgTitle
-		if(perMsgList.size() > 1 && msgTitle == EnumType.Type.NULL){
+		if(perMsgList.size() > 1 && msgTitle == Type.NULL){
 			findMsgTitle(perMsgList, msgListIndex, msgTitle);
 		}
 		System.out.println("msgTitle:" + msgTitle);
@@ -213,7 +213,7 @@ public class SerialReader implements Runnable {
 
 		if(perMsgList.size() == totalLength) {
 			// 取INFO 訊息欄位，從第8位 取到 倒數第4位
-			if(msgTitle == EnumType.Type.MSG){
+			if(msgTitle == Type.MSG){
 				for(int j=8 ; j<=totalLength-3 ; j++){
 					System.out.print(perMsgList.get(j-1) + " ");
 				}
@@ -225,7 +225,7 @@ public class SerialReader implements Runnable {
 			// save db
 			perMsgList.clear();
 			msgListIndex = 0;
-			msgTitle = EnumType.Type.NULL;
+			msgTitle = Type.NULL;
 			totalLength = 0;
 		}else{
 			msgListIndex++;
@@ -234,16 +234,16 @@ public class SerialReader implements Runnable {
 
 	}
 
-	private void findMsgTitle(List<String> perMsgList, int msgListIndex, EnumType.Type msgTitle){
+	private void findMsgTitle(List<String> perMsgList, int msgListIndex, Type msgTitle){
 		if( perMsgList.get(msgListIndex-1) == "aa" && perMsgList.get(msgListIndex) == "dd" ){
-			System.out.println(EnumType.Type.ACK);
-			msgTitle = EnumType.Type.ACK;
+			System.out.println(Type.ACK);
+			msgTitle = Type.ACK;
 		} else if( perMsgList.get(msgListIndex-1) == "aa" && perMsgList.get(msgListIndex) == "ee" ){
-			System.out.println(EnumType.Type.NACK);
-			msgTitle = EnumType.Type.NACK;
+			System.out.println(Type.NACK);
+			msgTitle = Type.NACK;
 		} else if( perMsgList.get(msgListIndex-1) == "aa" && perMsgList.get(msgListIndex) == "bb" ){
-			System.out.println(EnumType.Type.MSG);
-			msgTitle = EnumType.Type.MSG;
+			System.out.println(Type.MSG);
+			msgTitle = Type.MSG;
 		} else {
 			// do nothing.
 		}
