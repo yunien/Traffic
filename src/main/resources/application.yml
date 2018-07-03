@@ -1,0 +1,4 @@
+netty.tcp-port: 8090
+netty.boss-count: 1
+netty.worker-count: 10
+netty.backlog: 100
