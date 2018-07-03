@@ -1,4 +1,4 @@
-package com.zbum.example.socket.server.netty.handler
+package com.wistron.occ.socket.netty.handler
 
 import io.netty.channel.ChannelInboundHandlerAdapter
 import io.netty.channel.ChannelInitializer

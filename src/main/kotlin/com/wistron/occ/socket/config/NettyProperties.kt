@@ -1,4 +1,4 @@
-package com.zbum.example.socket.server.config;
+package com.wistron.occ.socket.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

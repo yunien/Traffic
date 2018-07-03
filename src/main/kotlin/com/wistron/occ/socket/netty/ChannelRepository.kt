@@ -1,5 +1,5 @@
 
-package com.zbum.example.socket.server.netty;
+package com.wistron.occ.socket.netty;
 
 import io.netty.channel.Channel;
 

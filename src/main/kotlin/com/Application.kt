@@ -1,9 +1,9 @@
 package com
 
-import com.zbum.example.socket.server.config.NettyProperties
-import com.zbum.example.socket.server.netty.ChannelRepository
-import com.zbum.example.socket.server.netty.TCPServer
-import com.zbum.example.socket.server.netty.handler.SomethingChannelInitializer
+import com.wistron.occ.socket.config.NettyProperties
+import com.wistron.occ.socket.netty.ChannelRepository
+import com.wistron.occ.socket.netty.TCPServer
+import com.wistron.occ.socket.netty.handler.SomethingChannelInitializer
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.nio.NioEventLoopGroup
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import java.net.InetSocketAddress
 import java.util.HashMap
