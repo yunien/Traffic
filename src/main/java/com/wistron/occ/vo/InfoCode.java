@@ -42,16 +42,11 @@ public enum InfoCode {
     }
 
     public static InfoCode lookup(final String infoCode) {
-        InfoCode returnInfoCode = null;
-        final InfoCode[] infoCodes = InfoCode.values();
-        for (InfoCode code : infoCodes) {
+        for (InfoCode code : values()) {
             if (StringUtils.equals(code.getInfoCode(), infoCode)) {
-                returnInfoCode = code;
-                break;
-            } else {
-                returnInfoCode = InfoCode.CODE_NULL;
+                return code;
             }
         }
-        return returnInfoCode;
+        return CODE_NULL;
     }
 }

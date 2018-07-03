@@ -32,14 +32,11 @@ public enum ParamCode {
     }
 
     public static ParamCode lookup(final String param) {
-        ParamCode returnParamCode = null;
-        final ParamCode[] params = ParamCode.values();
-        for (ParamCode value : params) {
-            if (value.getParam() == param) {
-                returnParamCode = value;
-                break;
+        for (ParamCode c : values()) {
+            if (c.getParam().equals(param)) {
+                return c;
             }
         }
-        return returnParamCode;
+        return null;
     }
 }

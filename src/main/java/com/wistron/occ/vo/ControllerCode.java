@@ -34,15 +34,12 @@ public enum  ControllerCode {
     }
 
     public static ControllerCode lookup(final byte hex) {
-        ControllerCode returnControllerCode = null;
-        final ControllerCode[] codes = ControllerCode.values();
-        for (ControllerCode code : codes) {
+        for (ControllerCode code : values()) {
             if (code.getHex() == hex) {
-                returnControllerCode = code;
-                break;
+                return code;
             }
         }
-        return returnControllerCode;
+        return null;
     }
 
 }
