@@ -41,7 +41,7 @@ public class MainSerialProcess {
 				OutputStream out = serialPort.getOutputStream();
 
 
-				(new Thread(new SerialReader(in, serialPort))).start();
+//				(new Thread(new SerialReader(in, serialPort))).start();
 
 //				(new Thread(new SerialWriter(out))).start();
 
