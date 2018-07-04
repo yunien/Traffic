@@ -1,6 +1,6 @@
 package com.wistron.occ.enums;
 
-public enum  ControllerCode {
+public enum ControlCode {
     DLE((byte) 0xaa, "Data Link Escape  以控制資料傳輸"),
     STX((byte) 0xbb, "Start of Text 訊息碼框之開始"),
     ETX((byte) 0xcc, "End of Text 訊息碼框之結束"),
@@ -12,7 +12,7 @@ public enum  ControllerCode {
     private byte hex;
     private String des;
 
-    ControllerCode (final byte hex, final String des){
+    ControlCode(final byte hex, final String des){
         this.hex = hex;
         this.des = des;
     }
@@ -21,25 +21,17 @@ public enum  ControllerCode {
         return hex;
     }
 
-    public void setHex(byte hex) {
-        this.hex = hex;
-    }
-
-    public String getDes() {
-        return des;
-    }
-
-    public void setDes(String des) {
-        this.des = des;
-    }
-
-    public static ControllerCode lookup(final byte hex) {
-        for (ControllerCode code : values()) {
+    public static ControlCode lookup(final byte hex) {
+        for (ControlCode code : values()) {
             if (code.getHex() == hex) {
                 return code;
             }
         }
         return null;
+    }
+
+    public  boolean equals(byte hex) {
+        return this.hex == hex;
     }
 
 }

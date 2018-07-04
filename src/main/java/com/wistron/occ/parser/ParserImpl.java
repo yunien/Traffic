@@ -22,20 +22,19 @@ public class ParserImpl implements Parser {
     public void process(InputStream in) throws IOException {
         byte[] buffer = new byte[1];
         List<String> perMsgList = new ArrayList<>();
+
         int msgListIndex = 0;
         Type msgTitle = Type.NULL;
         int totalLength = 0;
         List<String> infoList = new ArrayList<>();
         Map<InfoCode, List<String>> infoMap = new HashMap<>();
 
-        int i = 0;
         while (in.read(buffer) > -1) {
-            i++;
+
 
 
             perMsgList.add(Hex.encodeHexString(buffer));
 
-            System.out.println(perMsgList.size() + ". perMsgList:" + perMsgList.get(msgListIndex));
 
             //	第二個byte可決定傳過來的訊息類型 msgTitle
             if (perMsgList.size() > 1 && msgTitle == Type.NULL) {
@@ -63,7 +62,7 @@ public class ParserImpl implements Parser {
                 String length = perMsgList.get(5) + perMsgList.get(6);
                 totalLength = Integer.parseInt(length, 16);
             }
-            System.out.println(msgTitle + "=> perMsgList.size():" + perMsgList.size() + ". totalLength:" + totalLength);
+//            System.out.println(msgTitle + "=> perMsgList.size():" + perMsgList.size() + ". totalLength:" + totalLength);
 
             //	擷取完整byte字串後，解析字串
             if (perMsgList.size() == totalLength) {
@@ -120,7 +119,7 @@ public class ParserImpl implements Parser {
             System.out.println(infoCode + ":" + infoMap.get(infoCode));
             switch (infoCode) {
                 case CODE_5F0F:
-                    converter5F0F(infoMap.get(infoCode));
+//                    converter5F0F(infoMap.get(infoCode));
                     break;
 
                 default:
@@ -134,26 +133,28 @@ public class ParserImpl implements Parser {
     /**
      * 1. 用於控制中心監視號誌控制器之簡單燈態運作狀況用。
      * 2. 主要給無線通訊環境使用，以顯示紅黃綠燈。
-     *
+     * <p>
      * SignalMap
      * GreenSignalMap
      * YellowSignalMap
-     * RedSignalMap    Bit 設為 1 表示該方向有燈，Bit 設為 0 表示該方向沒有燈
-     *                        Bit 0:北向 Bit 1: 東北向 Bit 2: 東向 Bit 3: 東南向
-     *                        Bit 4:南向 Bit 5: 西南向 Bit 6: 西向 Bit 7: 西北向
+     * RedSignalMap
+     * <p>
+     * Bit 設為 1 表示該方向有燈，Bit 設為 0 表示該方向沒有燈
+     * Bit 0:北向 Bit 1: 東北向 Bit 2: 東向 Bit 3: 東南向
+     * Bit 4:南向 Bit 5: 西南向 Bit 6: 西向 Bit 7: 西北向
      */
-    private void converter5F0F(List<String> paramList) {
-        for (String param : paramList) {
-            byte byteParam = (byte) Integer.parseInt(param.substring(0, 2), 16);
-            for (int i = 0; i < 8; i++) {
-                int aa = getBit(byteParam, i);
-                System.out.print(aa + ". ");
-            }
-            System.out.println("");
-        }
-    }
-
-    private int getBit(byte id, int position) {
-        return (id >> position) & 1;
-    }
+//    private void converter5F0F(List<String> paramList) {
+//        for (String param : paramList) {
+//            byte byteParam = (byte) Integer.parseInt(param.substring(0, 2), 16);
+//            for (int i = 0; i < 8; i++) {
+//                int aa = getBit(byteParam, i);
+//                System.out.print(aa + ". ");
+//            }
+//            System.out.println("");
+//        }
+//    }
+//
+//    private int getBit(byte id, int position) {
+//        return (id >> position) & 1;
+//    }
 }

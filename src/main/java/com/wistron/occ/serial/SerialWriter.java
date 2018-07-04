@@ -2,7 +2,7 @@ package com.wistron.occ.serial;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import com.wistron.occ.enums.ControllerCode;
+import com.wistron.occ.enums.ControlCode;
 
 public class SerialWriter implements Runnable {
 	OutputStream out;
@@ -26,10 +26,10 @@ public class SerialWriter implements Runnable {
 
 	public byte[] makeData() {
 
-		byte[] MSG = new byte[] { ControllerCode.DLE.getHex(), ControllerCode.STX.getHex(),
-				(byte) 0x33 , ControllerCode.ADDR1.getHex() , ControllerCode.ADDR2.getHex(),
+		byte[] MSG = new byte[] { ControlCode.DLE.getHex(), ControlCode.STX.getHex(),
+				(byte) 0x33 , ControlCode.ADDR1.getHex() , ControlCode.ADDR2.getHex(),
 				(byte) 0x00, (byte) 0x0c, (byte) 0x0F, (byte) 0x40,
-				ControllerCode.DLE.getHex(), ControllerCode.ETX.getHex() };
+				ControlCode.DLE.getHex(), ControlCode.ETX.getHex() };
 
 		byte CKS = converterCKS(MSG);
 		System.out.println( "CKS:"+Integer.toHexString(CKS & (byte)0xff) );
