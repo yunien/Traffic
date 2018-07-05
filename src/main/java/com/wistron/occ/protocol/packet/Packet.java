@@ -2,11 +2,11 @@ package com.wistron.occ.protocol.packet;
 
 public abstract class Packet {
 
-    private byte seq;
-    private byte[] addr;
-    private byte[] len;
+    protected byte seq;
+    protected byte[] addr;
+    protected byte[] len;
 
-    private byte cks;
+    protected byte cks;
 
     public Packet(byte seq, byte[] addr, byte[] len) {
         this.seq = seq;
@@ -20,4 +20,6 @@ public abstract class Packet {
         // validate logic
         return true;
     }
+
+    abstract public byte[] getNative();
 }

@@ -7,11 +7,10 @@ public class StartPacketState implements PacketState {
     @Override
     public void feed(PacketFactory packetFactory, byte b) {
         switch (ControlCode.lookup(b)) {
-
             case DLE:
                 break;
             case STX:
-                packetFactory.setPacketState(new StartPacketState());
+                packetFactory.setPacketState(new NormalPacketState());
                 break;
             case ETX:
                 break;

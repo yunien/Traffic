@@ -2,7 +2,6 @@ package com.wistron.occ.protocol.state;
 
 import com.wistron.occ.protocol.packet.NormalPacket;
 import com.wistron.occ.protocol.packet.PacketFactory;
-import org.apache.commons.codec.binary.Hex;
 
 public class NormalPacketState implements PacketState {
 
@@ -29,7 +28,7 @@ public class NormalPacketState implements PacketState {
             case 4:
                 if (len == 0) {
                     codes[index] = b;
-                    len = Integer.parseInt(Hex.encodeHexString(new byte[]{codes[3], codes[4]}));
+                    len = Byte.toUnsignedInt(codes[3]) * 256 + Byte.toUnsignedInt(codes[4]) -10;
                     remain = len;
                     info = new byte[len];
                 } else {

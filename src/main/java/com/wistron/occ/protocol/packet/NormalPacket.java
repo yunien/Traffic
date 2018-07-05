@@ -1,5 +1,7 @@
 package com.wistron.occ.protocol.packet;
 
+import com.wistron.occ.enums.ControlCode;
+
 public class NormalPacket extends Packet {
 
     private byte[] info;
@@ -24,5 +26,25 @@ public class NormalPacket extends Packet {
         this.dle = codes[5];
         this.etx = codes[6];
         validateCks(codes[7]);
+    }
+
+    @Override
+    public byte[] getNative() {
+        int length = info.length;
+        byte[] re = new byte[10 + length];
+        re[0] = ControlCode.DLE.getHex();
+        re[1] = ControlCode.STX.getHex();
+        re[2] = seq;
+        re[3] = addr[0];
+        re[4] = addr[1];
+        re[5] = len[0];
+        re[6] = len[1];
+        for (int i = 1; i <= length; i++) {
+            re[6+i] = info[i-1];
+        }
+        re[7 + length] = dle;
+        re[8 + length] = etx;
+        re[9 + length] = cks;
+        return re;
     }
 }

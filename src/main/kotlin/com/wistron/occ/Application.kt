@@ -3,7 +3,7 @@ package com.wistron.occ
 import com.wistron.occ.socket.config.NettyProperties
 import com.wistron.occ.socket.netty.ChannelRepository
 import com.wistron.occ.socket.netty.TCPServer
-import com.wistron.occ.socket.netty.handler.SomethingChannelInitializer
+import com.wistron.occ.socket.netty.handler.ByteChannelInitializer
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.nio.NioEventLoopGroup
@@ -26,15 +26,15 @@ class Application {
     lateinit var nettyProperties: NettyProperties
 
     @Autowired
-    lateinit var somethingChannelInitializer: SomethingChannelInitializer
+    lateinit var byteChannelInitializer: ByteChannelInitializer
 
     @Bean(name = arrayOf("serverBootstrap"))
-    fun bootstrap(): ServerBootstrap {
+    fun bootstrap2(): ServerBootstrap {
         val b = ServerBootstrap()
         b.group(bossGroup(), workerGroup())
                 .channel(NioServerSocketChannel::class.java)
                 .handler(LoggingHandler(LogLevel.DEBUG))
-                .childHandler(somethingChannelInitializer)
+                .childHandler(byteChannelInitializer)
 
         val tcpChannelOptions: Map<ChannelOption<Int>, Int> = tcpChannelOptions()
         for ((option, value) in tcpChannelOptions) {
@@ -42,7 +42,6 @@ class Application {
         }
         return b
     }
-
 
     @Bean
     fun tcpChannelOptions(): Map<ChannelOption<Int>, Int> {
@@ -75,8 +74,6 @@ class Application {
 }
 
 fun main(args: Array<String>) {
-    //runApplication<Application>(*args)
-
     val context = SpringApplication.run(Application::class.java, *args)
     val tcpServer = context.getBean(TCPServer::class.java)
     tcpServer.start()
