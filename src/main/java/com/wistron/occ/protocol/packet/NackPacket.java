@@ -9,4 +9,10 @@ public class NackPacket extends Packet {
         this.err = err;
         validateCks(cks);
     }
+
+    public NackPacket(byte[] codes) {
+        super(codes[0], new byte[] {codes[1], codes[2]}, new byte[] {codes[3], codes[4]});
+        err = codes[5];
+        validateCks(codes[6]);
+    }
 }

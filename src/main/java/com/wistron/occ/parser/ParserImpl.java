@@ -1,9 +1,13 @@
 package com.wistron.occ.parser;
 
+import com.sun.tracing.dtrace.Attributes;
 import com.wistron.occ.enums.InfoCode;
 import com.wistron.occ.enums.Type;
+import com.wistron.occ.protocol.packet.Packet;
+import com.wistron.occ.protocol.packet.PacketFactory;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,7 +20,9 @@ import java.util.Map;
 @Component
 public class ParserImpl implements Parser {
 
-    private List<byte[]> massages;
+    @Autowired
+    private PacketFactory packetFactory;
+
 
     @Override
     public void process(InputStream in) throws IOException {
@@ -85,6 +91,7 @@ public class ParserImpl implements Parser {
                 System.out.println("list2 clear");
 
                 // save db
+
                 perMsgList.clear();
                 msgListIndex = 0;
                 msgTitle = Type.NULL;
@@ -97,6 +104,16 @@ public class ParserImpl implements Parser {
 
         }
     }
+
+    public void process2(InputStream in) throws IOException {
+        byte[] buffer = new byte[1];
+
+
+        while (in.read(buffer) > -1) {
+            packetFactory.sink(buffer[0]);
+        }
+    }
+
 
 
     private void composeInfoMap(List<String> perMsgList, int totalLength,
